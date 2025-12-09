@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
+from valutatrade_hub.cli.interface import run_cli
+
 
 def main():
-    pass
+    run_cli()
 
 
 if __name__ == "__main__":
