@@ -15,7 +15,6 @@ RATES_FILE = os.path.join(DATA_DIR, "rates.json")
 
 # ============ ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ РАБОТЫ С JSON =============
 
-
 def _load_json(path: str, default):
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -30,7 +29,6 @@ def _save_json(path: str, data):
 
 
 # ======================= ПОЛЬЗОВАТЕЛИ ========================
-
 
 def load_users() -> List[User]:
     data = _load_json(USERS_FILE, default=[])
@@ -79,7 +77,6 @@ def find_user_by_username(username: str) -> Optional[User]:
 
 
 # =============== ПОРТФЕЛИ =================
-
 
 def load_portfolios() -> Dict[int, Portfolio]:
     """
@@ -145,10 +142,21 @@ def update_portfolio(portfolio: Portfolio) -> None:
 
 # ===================== КУРСЫ =====================
 
-
 def load_rates() -> dict:
-    return _load_json(RATES_FILE, default={})
+    """
+    Возвращает словарь пар курсов.
+    """
+    data = _load_json(RATES_FILE, default={})
+    if isinstance(data, dict) and "pairs" in data:
+        return data["pairs"]
+    return data
 
 
-def save_rates(data: dict) -> None:
+def save_rates(pairs: dict, last_refresh: str | None = None) -> None:
+    """
+    Сохраняет пары курсов
+    """
+    data = {"pairs": pairs}
+    if last_refresh is not None:
+        data["last_refresh"] = last_refresh
     _save_json(RATES_FILE, data)

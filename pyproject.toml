@@ -1,25 +1,32 @@
-[project]
+[tool.poetry]
 name = "finalproject-parshin-m25-555"
 version = "0.1.0"
-description = ""
+description = "Currency trading simulation platform with parser service"
 authors = [
-    {name = "Pavel",email = "elderlyracoon1337@gmail.com"}
-]
-readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "prompt (>=0.4.1,<0.5.0)",
-    "prettytable (>=3.17.0,<4.0.0)"
+    "Pavel <elderlyracoon1337@gmail.com>"
 ]
 
-[tool.poetry]
+readme = "README.md"
 packages = [
     { include = "valutatrade_hub" },
 ]
 
+# Основные зависимости проекта
+[tool.poetry.dependencies]
+python = ">=3.12,<3.15"
+prompt = ">=0.4.1,<0.5.0"
+prettytable = ">=3.17.0,<4.0.0"
+requests = "^2.31.0"  # нужно для Parser Service
+
+# Dev зависимостu
+[tool.poetry.group.dev.dependencies]
+ruff = ">=0.14.7,<0.15.0"
+
+# Точка входа — консольная команда project
 [tool.poetry.scripts]
 project = "main:main"
 
+# Настройки Ruff
 [tool.ruff]
 line-length = 88
 target-version = "py312"
@@ -27,13 +34,8 @@ exclude = ["venv", ".venv", "dist", "__pycache__"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
-ignore = [] 
+ignore = []
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[dependency-groups]
-dev = [
-    "ruff (>=0.14.7,<0.15.0)"
-]
